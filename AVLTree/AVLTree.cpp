@@ -1,8 +1,8 @@
 #include <iostream>
-#include "BST.h"
+#include "AVL.h"
 
 int main(){
-	BST<int> bst;
+	AVL<int> bst;
 	bst.insert(50);
 	bst.insert(30);
 	bst.insert(20);

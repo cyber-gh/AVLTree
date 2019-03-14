@@ -24,6 +24,12 @@
     <ClCompile Include="BST.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NodeAVL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AVL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Node.h">
@@ -32,9 +38,18 @@
     <ClInclude Include="BST.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NodeAVL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AVL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="BST.tpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="AVL.tpp">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
