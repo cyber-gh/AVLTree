@@ -1,36 +1,46 @@
 #pragma once
-#include <iostream>
+#include <algorithm>
 
 template<typename T>
 class Node{
-protected:
+private:
 	T value;
 	int height;
 	Node* leftNode;
 	Node* rightNode;
 	void updateHeight() { 
-		height = max((leftNode == nullptr?-1:leftNode->height), (rightNode == nullptr?-1:rightNode->height)) + 1; 
+		height = std::max(Node<T>::getHeight(leftNode), Node<T>::getHeight(rightNode)) + 1;
 	}
+
 	template<class T> friend class BST;
+	template<class T> friend class AVL;
 
 public:
-	Node() : Node(T()) {} //delegating the value constructor with the default value
+	Node() : Node(T()) {} //delegating to the value constructor with the default value
 	Node(T value);
 	~Node();
+
+	static int getHeight(Node<T>* node) {
+		if (node == nullptr) return -1;
+		return node->height;
+	}
+	static int getBalance(Node<T>* node) {
+		if (node == nullptr) return 0;
+		return Node<T>::getHeight(node->leftNode) - Node<T>::getHeight(node->rightNode);
+	}
 };
 
 
 template<typename T>
-inline Node<T>::Node(T value) {
+Node<T>::Node(T value) {
 	this->value = value;
 	this->height = -1;
 	leftNode = nullptr;
 	rightNode = nullptr;
-	//std::cout << value;
 }
 
 template<typename T>
-inline Node<T>::~Node() {
+Node<T>::~Node() {
 	if (leftNode != nullptr)free(leftNode);
 	if (rightNode != nullptr) free(rightNode);
 	leftNode = nullptr;

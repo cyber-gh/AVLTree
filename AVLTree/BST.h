@@ -9,6 +9,7 @@ protected:
 	void inorder(Node<T>* curr);
 	Node<T>* remove(Node<T>* curr, T value);
 	Node<T>* succ(Node<T>* curr);
+	Node<T>* search(Node<T>* curr, T value);
 public:
 	BST();
 	BST(T value);
@@ -16,6 +17,7 @@ public:
 
 	void insert(T value);
 	void remove(T value);
+	bool search(T value);
 	void preorder();
 	void inorder();
 	//test functions

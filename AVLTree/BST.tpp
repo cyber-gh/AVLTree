@@ -7,7 +7,7 @@ Node<T>* BST<T>::insert(Node<T>* curr, T value){
 
 	if (value < curr->value)
 		curr->leftNode = insert(curr->leftNode, value);
-	if (value > curr->value)
+	else if (value > curr->value)
 		curr->rightNode = insert(curr->rightNode, value);
 
 	return curr;
@@ -74,13 +74,25 @@ Node<T>* BST<T>::succ(Node<T>* curr)
 }
 
 template<typename T>
+Node<T>* BST<T>::search(Node<T>* curr, T value){
+	if (curr == nullptr) return;
+	if (curr->value == value) return curr;
+	if (curr->value < value)
+		return search(curr->rightNode, value);
+	return search(curr->leftNode, value);
+}
+
+template<typename T>
 BST<T>::BST() {
 	this->root = nullptr;
+	std::cout << "isntance without value" << std::endl;
+
 }
 
 template<typename T>
 BST<T>::BST(T value){
 	root = new Node<T>(value);
+	std::cout << "isntance with value" << std::endl;
 }
 
 template<typename T>
@@ -102,12 +114,18 @@ void BST<T>::remove(T value){
 }
 
 template<typename T>
+bool BST<T>::search(T value){
+	return (search(root, value) != nullptr);
+}
+
+template<typename T>
 void BST<T>::preorder(){
 	preorder(root);
 }
 
 template<typename T>
 void BST<T>::inorder(){
+	//std::cout << "called bst inroder";
 	inorder(root);
 }
 
