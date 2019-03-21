@@ -62,15 +62,16 @@ Node<T>* AVL<T>::remove(Node<T>* curr, T value){
 				curr = nullptr;
 			}
 			else {
-				*curr = *temp;
+				curr = temp;
 				free(temp);
 			}
 		}
 		else {
 			//both children, find succ
-			Node<T>* temp= succ(curr);
+			Node<T>* temp =this->succ(curr);
 			curr->value = temp->value;
 			curr->rightNode = remove(curr->rightNode, temp->value);
+			free(temp);
 		}
 	}
 
@@ -80,7 +81,26 @@ Node<T>* AVL<T>::remove(Node<T>* curr, T value){
 	curr->updateHeight();
 
 	int balance = Node<T>::getBalance(curr);
-	//TODO to be continued 
+	if (balance > 1 && Node<T>::getBalance(curr->leftNode) >= 0) {
+		return rightRotate(curr);
+	}
+
+	if (balance > 1 && Node<T>::getBalance(curr->leftNode) < 0) {
+		curr->leftNode = leftRotate(curr->leftNode);
+		return rightRotate(curr);
+	}
+
+	if (balance < -1 && Node<T>::getBalance(curr->rightNode) <= 0) {
+		return leftRotate(curr);
+	}
+
+	if (balance < -1 && Node<T>::getBalance(curr->rightNode) > 0) {
+		curr->rightNode = rightRotate(curr->rightNode);
+		return leftRotate(curr);
+	}
+
+	return curr;
+
 }
 
 
@@ -117,3 +137,23 @@ template<typename T>
 inline void AVL<T>::insert(T value) {
 	this->root = insert(this->root, value);
 }
+
+template<typename T>
+void AVL<T>::remove(T value){
+	this->root = remove(this->root, value);
+}
+
+template<typename T>
+AVL<T> operator+(AVL<T> &a, AVL<T> &b) {
+	AVL<T> res;
+	a.traverse([&](T value) -> void {
+		res.insert(value);
+		});
+	b.traverse([&](T value) -> void {
+		res.insert(value);
+		});
+
+	return res;
+}
+
+

@@ -83,6 +83,17 @@ Node<T>* BST<T>::search(Node<T>* curr, T value){
 }
 
 template<typename T>
+void BST<T>::traverseValue(Node<T>* curr, std::function<void(T)> it){
+	if (curr == nullptr) return;
+	it(curr->value);
+	traverseValue(curr->leftNode, it);
+	traverseValue(curr->rightNode, it);
+	
+}
+
+
+
+template<typename T>
 BST<T>::BST() {
 	this->root = nullptr;
 	std::cout << "isntance without value" << std::endl;
@@ -95,12 +106,25 @@ BST<T>::BST(T value){
 	std::cout << "isntance with value" << std::endl;
 }
 
+
+
 template<typename T>
-BST<T>::~BST()
-{
-	if (root != nullptr) free(root);
+BST<T>::~BST(){
+	if (root == nullptr) return;
+	std::stack<Node<T>* > st;
+	st.push(root);
+	while (!st.empty()) {
+		Node<T>* curr = st.top();
+
+		st.pop();
+		if (curr->rightNode != nullptr) st.push(curr->rightNode);
+		if (curr->leftNode != nullptr) st.push(curr->leftNode);
+
+		free(curr);
+		curr = nullptr;
+	}
 	root = nullptr;
-	//TODO delete all tree
+	
 }
 
 template<typename T>
@@ -119,6 +143,14 @@ bool BST<T>::search(T value){
 }
 
 template<typename T>
+T BST<T>::maxVal(){
+	Node<T>* it = root;
+	while (it->rightNode != nullptr)
+		it = it->rightNode;
+	return it->value;
+}
+
+template<typename T>
 void BST<T>::preorder(){
 	preorder(root);
 }
@@ -128,4 +160,21 @@ void BST<T>::inorder(){
 	//std::cout << "called bst inroder";
 	inorder(root);
 }
+
+template<typename T>
+void BST<T>::postorder(){
+	postorder(root);
+}
+
+template<typename T>
+void BST<T>::postorder(Node<T>* curr){
+	if (curr == nullptr) return;
+
+	
+	postorder(curr->leftNode);
+	postorder(curr->rightNode);
+	std::cout << curr->value << " ";
+}
+
+
 

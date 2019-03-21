@@ -10,6 +10,7 @@ private:
 	Node<T>* remove(Node<T>* curr, T value);
 	Node<T>* leftRotate(Node<T>* curr);
 	Node<T>* rightRotate(Node<T>* curr);
+	template<typename T> friend AVL<T> operator+(AVL<T> &a,AVL<T> &b);
 
 public:
 	AVL(): BST<T>(){}
@@ -17,6 +18,11 @@ public:
 	~AVL() {}
 
 	void insert(T value);
+	void remove(T value);
+
+	
+
+	
 };
 
 #include "AVL.tpp"

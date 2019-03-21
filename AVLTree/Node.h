@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 
+
 template<typename T>
 class Node{
 private:
@@ -41,8 +42,4 @@ Node<T>::Node(T value) {
 
 template<typename T>
 Node<T>::~Node() {
-	if (leftNode != nullptr)free(leftNode);
-	if (rightNode != nullptr) free(rightNode);
-	leftNode = nullptr;
-	rightNode = nullptr;
 }
