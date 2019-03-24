@@ -14,21 +14,23 @@ Node<T>* BST<T>::insert(Node<T>* curr, T value){
 }
 
 template<typename T>
-void BST<T>::preorder(Node<T>* curr){
+void BST<T>::preorder(Node<T>* curr, std::function<void(T)> it){
 	if (curr == nullptr) return;
 
-	std::cout << curr->value << " ";
-	preorder(curr->leftNode);
-	preorder(curr->rightNode);
+	//std::cout << curr->value << " ";
+	it(curr->value);
+	preorder(curr->leftNode, it);
+	preorder(curr->rightNode, it);
 }
 
 template<typename T>
-void BST<T>::inorder(Node<T>* curr){
+void BST<T>::inorder(Node<T>* curr, std::function<void(T)> it){
 	if (curr == nullptr) return;
 
-	inorder(curr->leftNode);
-	std::cout << curr->value << " ";
-	inorder(curr->rightNode);
+	inorder(curr->leftNode, it);
+	it(curr->value);
+	//std::cout << curr->value << " ";
+	inorder(curr->rightNode, it);
 }
 
 template<typename T>
@@ -83,13 +85,13 @@ Node<T>* BST<T>::search(Node<T>* curr, T value) const {
 }
 
 template<typename T>
-void BST<T>::traverseValue(Node<T>* curr, std::function<void(T)> it) const {
+void BST<T>::traverse(Node<T>* curr, std::function<void(T)> it) const {
 	if (curr == nullptr) return;
 	
 	//it(curr->value); /TODO change this back here in case of bugs
-	traverseValue(curr->leftNode, it);
+	traverse(curr->leftNode, it);
 	it(curr->value);
-	traverseValue(curr->rightNode, it);
+	traverse(curr->rightNode, it);
 	
 }
 
@@ -157,28 +159,43 @@ T BST<T>::maxVal(){
 }
 
 template<typename T>
-void BST<T>::preorder(){
-	preorder(root);
+T* BST<T>::preorder(){
+	T* rs= (T*)calloc(this->size, sizeof(T));
+	int index = 0;
+	preorder(root, [&](T value) {
+		rs[index++] = value;
+		});
+	return rs;
 }
 
 template<typename T>
-void BST<T>::inorder(){
-	inorder(root);
+T* BST<T>::inorder(){
+	T* rs = (T*)calloc(this->size, sizeof(T));
+	int index = 0;
+	inorder(root, [&](T value) {
+		rs[index++] = value;
+		});
+	return rs;
 }
 
 template<typename T>
-void BST<T>::postorder(){
-	postorder(root);
+T* BST<T>::postorder(){
+	T* rs = (T*)calloc(this->size, sizeof(T));
+	int index = 0;
+	postorder(root, [&](T value) {
+		rs[index++] = value;
+		});
+	return rs;
 }
 
 template<typename T>
-void BST<T>::postorder(Node<T>* curr){
+void BST<T>::postorder(Node<T>* curr, std::function<void(T)> it){
 	if (curr == nullptr) return;
 
-	
-	postorder(curr->leftNode);
-	postorder(curr->rightNode);
-	std::cout << curr->value << " ";
+	postorder(curr->leftNode, it);
+	postorder(curr->rightNode, it);
+	it(curr->value);
+	//std::cout << curr->value << " ";
 }
 
 

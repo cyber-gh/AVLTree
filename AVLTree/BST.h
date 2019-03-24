@@ -9,14 +9,14 @@ protected:
 	Node<T>* root;
 	int size = 0;
 	Node<T>* insert(Node<T>* curr, T value);
-	void preorder(Node<T>* curr);
-	void inorder(Node<T>* curr);
-	void postorder(Node<T>* curr);
+	void preorder(Node<T>* curr, std::function<void(T)> it );
+	void inorder(Node<T>* curr, std::function<void(T)> it );
+	void postorder(Node<T>* curr, std::function<void(T)> it);
 	Node<T>* remove(Node<T>* curr, T value);
 	Node<T>* succ(Node<T>* curr);
 	Node<T>* search(Node<T>* curr, T value) const ;
 
-	void traverseValue(Node<T>* curr, std::function<void(T)> it = [](T value) {std::cout << T << " "; }) const ;
+	void traverse(Node<T>* curr, std::function<void(T)> it = [](T value) {; }) const;
 
 
 	
@@ -30,9 +30,9 @@ public:
 	void remove(T value);
 	bool search(T value) const ;
 	T maxVal();
-	void preorder();
-	void inorder();
-	void postorder();
+	T* preorder();
+	T* inorder();
+	T* postorder();
 	int sz() const {
 		return this->size;
 	}
@@ -40,7 +40,7 @@ public:
 
 	// something of a replacement for an iterator
 	void traverse(std::function<void(T)> it) const {
-		traverseValue(root, it);
+		traverse(root, it);
 	}
 
 	

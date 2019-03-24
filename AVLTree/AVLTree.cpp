@@ -19,9 +19,10 @@ void test() {
 	c = a - b;
 	std::cout << c.maxVal() << std::endl;
 	std::cout << c;
-	std::cout << "d= ";
-	std::cin >> d;
-	std::cout << d;
+	//std::cout << "d= ";
+	//std::cin >> d;
+	//std::cout << d;
+	
 
 }
 
@@ -37,6 +38,14 @@ void test2() {
 	v = c;
 	v = val();
 	v.inorder();
+}
+
+void test3() {
+	AVL<int> a;
+	std::cin >> a;
+	int* temp = a.inorder();
+	for (int i = 0; i < a.sz(); i++) std::cout << temp[i] << " ";
+	free(temp);
 }
 
 int main(){

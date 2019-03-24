@@ -63,8 +63,8 @@ Node<T>* AVL<T>::remove(Node<T>* curr, T value){
 			}
 			else {
 				*curr = *temp;
-				free(temp);
 			}
+			free(temp);
 		}
 		else {
 			//both children, find succ
