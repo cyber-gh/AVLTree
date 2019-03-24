@@ -15,13 +15,16 @@ void test() {
 	b.insert(3);
 	a.remove(2);
 	a.remove(6);
-	c = a + b;
-	c = a - b;
+	if (a > b)
+		c = a + b;
+	if (a < b)
+		c = a - b;
 	std::cout << c.maxVal() << std::endl;
 	std::cout << c;
-	//std::cout << "d= ";
-	//std::cin >> d;
-	//std::cout << d;
+	//n -> n elements
+	std::cout << "d= ";
+	std::cin >> d;
+	std::cout << d;
 	
 
 }
@@ -37,7 +40,6 @@ void test2() {
 	c.insert(2);
 	v = c;
 	v = val();
-	v.inorder();
 }
 
 void test3() {
@@ -50,6 +52,7 @@ void test3() {
 
 int main(){
 	test();
+	test3();
 	
 	//for memory leaks
 	_CrtDumpMemoryLeaks();
