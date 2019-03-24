@@ -135,25 +135,86 @@ Node<T>* AVL<T>::rightRotate(Node<T>* curr){
 
 template<typename T>
 inline void AVL<T>::insert(T value) {
+	this->size++;
 	this->root = insert(this->root, value);
 }
 
 template<typename T>
 void AVL<T>::remove(T value){
+	this->size--;
 	this->root = remove(this->root, value);
 }
 
 template<typename T>
-AVL<T> operator+(AVL<T> &a, AVL<T> &b) {
-	AVL<T> res;
-	a.traverse([&](T value) -> void {
-		res.insert(value);
-		});
-	b.traverse([&](T value) -> void {
-		res.insert(value);
+AVL<T>& AVL<T>::operator=(AVL<T> other)
+{
+	std::swap(this->root, other.root);
+	std::swap(this->size, other.size);
+	return *this;
+}
+
+template<typename T>
+bool operator>(AVL<T>& lhs,AVL<T>& rhs) {
+	if (lhs.maxVal() > rhs.maxVal()) return true;
+	return false;
+}
+
+template<typename T>
+bool operator<(AVL<T>& lhs, AVL<T>& rhs) {
+	if (lhs.maxVal() < rhs.maxVal()) return true;
+	return false;
+}
+
+template<typename T>
+AVL<T>::AVL(const AVL<T>& other) {
+	this->root = nullptr;
+	this->size = 0;
+	other.traverse([&](T value) {
+		insert(value);
 		});
 
+
+}
+
+template<typename T>
+AVL<T>& AVL<T>::operator+=(const AVL<T>& other)
+{
+	other.traverse([&](T value) {
+		insert(value);
+		});
+
+	return *this;
+}
+
+template<typename T>
+AVL<T> AVL<T>::operator+(const AVL<T>& other)
+{
+	AVL<T> res(*this);
+	res += other;
 	return res;
 }
 
+template<typename T>
+AVL<T>& AVL<T>::operator-=(const AVL<T>& other)
+{
+	std::vector<T> toDelete;
 
+	this->traverse([&](T value) {
+		if (other.search(value)) toDelete.push_back(value);
+
+		});
+	for (auto it : toDelete)
+		remove(it);
+	toDelete.clear();
+
+	return *this;
+	
+}
+
+template<typename T>
+AVL<T> AVL<T>::operator-(const AVL<T>& other)
+{
+	AVL<T> res(*this);
+	res -= other;
+	return res;
+}

@@ -74,8 +74,8 @@ Node<T>* BST<T>::succ(Node<T>* curr)
 }
 
 template<typename T>
-Node<T>* BST<T>::search(Node<T>* curr, T value){
-	if (curr == nullptr) return;
+Node<T>* BST<T>::search(Node<T>* curr, T value) const {
+	if (curr == nullptr) return nullptr;
 	if (curr->value == value) return curr;
 	if (curr->value < value)
 		return search(curr->rightNode, value);
@@ -83,7 +83,7 @@ Node<T>* BST<T>::search(Node<T>* curr, T value){
 }
 
 template<typename T>
-void BST<T>::traverseValue(Node<T>* curr, std::function<void(T)> it){
+void BST<T>::traverseValue(Node<T>* curr, std::function<void(T)> it) const {
 	if (curr == nullptr) return;
 	it(curr->value);
 	traverseValue(curr->leftNode, it);
@@ -95,22 +95,22 @@ void BST<T>::traverseValue(Node<T>* curr, std::function<void(T)> it){
 
 template<typename T>
 BST<T>::BST() {
+	this->size = 0;
 	this->root = nullptr;
-	std::cout << "isntance without value" << std::endl;
 
 }
 
 template<typename T>
 BST<T>::BST(T value){
 	root = new Node<T>(value);
-	std::cout << "isntance with value" << std::endl;
+	size = 1;
 }
 
 
 
 template<typename T>
 BST<T>::~BST(){
-	if (root == nullptr) return;
+	if (root == nullptr || size <= 0 || size >= 1000) return;
 	std::stack<Node<T>* > st;
 	st.push(root);
 	while (!st.empty()) {
@@ -124,27 +124,31 @@ BST<T>::~BST(){
 		curr = nullptr;
 	}
 	root = nullptr;
+	size = 0;
 	
 }
 
 template<typename T>
 inline void BST<T>::insert(T value) {
+	size++;
 	root = insert(root, value);
 }
 
 template<typename T>
 void BST<T>::remove(T value){
+	size--;
 	root = remove(root, value);
 }
 
 template<typename T>
-bool BST<T>::search(T value){
+bool BST<T>::search(T value) const {
 	return (search(root, value) != nullptr);
 }
 
 template<typename T>
 T BST<T>::maxVal(){
 	Node<T>* it = root;
+	if (it == nullptr) return T(); // because the avl comparator requires an value
 	while (it->rightNode != nullptr)
 		it = it->rightNode;
 	return it->value;
@@ -157,7 +161,6 @@ void BST<T>::preorder(){
 
 template<typename T>
 void BST<T>::inorder(){
-	//std::cout << "called bst inroder";
 	inorder(root);
 }
 
