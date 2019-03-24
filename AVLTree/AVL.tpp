@@ -218,3 +218,24 @@ AVL<T> AVL<T>::operator-(const AVL<T>& other)
 	res -= other;
 	return res;
 }
+
+template<typename T>
+std::ostream& operator <<(std::ostream& output, const AVL<T>& avl) {
+	output << "AVL: size = " << avl.sz() << std::endl;
+	avl.traverse([&](T value) {
+		output << value << " ";
+		});
+	output << std::endl;
+	return output;
+}
+
+template<typename T>
+std::istream& operator >>(std::istream& input, AVL<T>& avl) {
+	int size = 0;
+	input >> size;
+	for (T value; size--;) {
+		input >> value;
+		avl.insert(value);
+	}
+	return input;
+}

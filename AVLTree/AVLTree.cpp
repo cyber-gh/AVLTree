@@ -8,15 +8,19 @@
 void test() {
 
 
-	AVL<int> a, b, c;
+	AVL<int> a, b, c, d;
 	a.insert(2);
 	a.insert(3);
 	a.insert(4);
 	b.insert(3);
+	a.remove(2);
+	a.remove(6);
 	c = a + b;
 	c = a - b;
 	//std::cout << c.maxVal() << std::endl;
-	c.inorder();
+	std::cout << c;
+	std::cin >> d;
+	std::cout << d;
 
 }
 

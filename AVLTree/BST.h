@@ -33,7 +33,7 @@ public:
 	void preorder();
 	void inorder();
 	void postorder();
-	int sz() {
+	int sz() const {
 		return this->size;
 	}
 

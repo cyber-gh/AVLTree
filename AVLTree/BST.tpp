@@ -85,8 +85,10 @@ Node<T>* BST<T>::search(Node<T>* curr, T value) const {
 template<typename T>
 void BST<T>::traverseValue(Node<T>* curr, std::function<void(T)> it) const {
 	if (curr == nullptr) return;
-	it(curr->value);
+	
+	//it(curr->value); /TODO change this back here in case of bugs
 	traverseValue(curr->leftNode, it);
+	it(curr->value);
 	traverseValue(curr->rightNode, it);
 	
 }

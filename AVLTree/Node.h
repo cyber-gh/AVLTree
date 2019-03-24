@@ -35,7 +35,7 @@ public:
 template<typename T>
 Node<T>::Node(T value) {
 	this->value = value;
-	this->height = -1;
+	this->height = 1;
 	leftNode = nullptr;
 	rightNode = nullptr;
 }
