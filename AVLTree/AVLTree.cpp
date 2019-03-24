@@ -17,8 +17,9 @@ void test() {
 	a.remove(6);
 	c = a + b;
 	c = a - b;
-	//std::cout << c.maxVal() << std::endl;
+	std::cout << c.maxVal() << std::endl;
 	std::cout << c;
+	std::cout << "d= ";
 	std::cin >> d;
 	std::cout << d;
 

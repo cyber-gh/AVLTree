@@ -62,7 +62,7 @@ Node<T>* AVL<T>::remove(Node<T>* curr, T value){
 				curr = nullptr;
 			}
 			else {
-				curr = temp;
+				*curr = *temp;
 				free(temp);
 			}
 		}
@@ -146,8 +146,8 @@ void AVL<T>::remove(T value){
 }
 
 template<typename T>
-AVL<T>& AVL<T>::operator=(AVL<T> other)
-{
+AVL<T>& AVL<T>::operator=(AVL<T> other){	
+	//swap this with a local copy of other so this gets replaced and its resources destructed
 	std::swap(this->root, other.root);
 	std::swap(this->size, other.size);
 	return *this;
@@ -177,8 +177,7 @@ AVL<T>::AVL(const AVL<T>& other) {
 }
 
 template<typename T>
-AVL<T>& AVL<T>::operator+=(const AVL<T>& other)
-{
+AVL<T>& AVL<T>::operator+=(const AVL<T>& other){
 	other.traverse([&](T value) {
 		insert(value);
 		});
@@ -187,21 +186,18 @@ AVL<T>& AVL<T>::operator+=(const AVL<T>& other)
 }
 
 template<typename T>
-AVL<T> AVL<T>::operator+(const AVL<T>& other)
-{
+AVL<T> AVL<T>::operator+(const AVL<T>& other){
 	AVL<T> res(*this);
 	res += other;
 	return res;
 }
 
 template<typename T>
-AVL<T>& AVL<T>::operator-=(const AVL<T>& other)
-{
+AVL<T>& AVL<T>::operator-=(const AVL<T>& other){
 	std::vector<T> toDelete;
 
 	this->traverse([&](T value) {
 		if (other.search(value)) toDelete.push_back(value);
-
 		});
 	for (auto it : toDelete)
 		remove(it);
@@ -212,8 +208,7 @@ AVL<T>& AVL<T>::operator-=(const AVL<T>& other)
 }
 
 template<typename T>
-AVL<T> AVL<T>::operator-(const AVL<T>& other)
-{
+AVL<T> AVL<T>::operator-(const AVL<T>& other){
 	AVL<T> res(*this);
 	res -= other;
 	return res;
